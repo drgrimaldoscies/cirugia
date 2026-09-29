@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Verde institucional CIES — extraído directamente del logo oficial */
+  --green-950: #15231b;
+  --green-900: #203428;
+  --green-800: #31513e;
+  --green-700: #4c7d5f;
+  --green-500: #7ea18c;
+  --green-300: #bbcec2;
+  /* Naranja institucional CIES — extraído directamente del logo oficial */
+  --orange: #cc773b;
+  --orange-soft: #f9efe7;
+  --slate-700: #3d4854;
+  --slate-500: #647082;
+  --slate-300: #a6b0bc;
+  --paper: #f2f4f6;
+  --card: #ffffff;
+  --line: #e1e6eb;
+  /* Verde de éxito (estados avanzados/positivos), más claro que el verde de marca */
+  --teal: #3f8f68;
+  --teal-soft: #e6f2ea;
+  /* Rojo ladrillo, reservado exclusivamente para pérdidas/cancelaciones */
+  --brick: #a8412f;
+  --brick-soft: #f8e7e3;
+  --gray-soft: #edeff1;
+}
+
+body {
+  font-family: "Libre Franklin", -apple-system, sans-serif;
+  color: var(--green-950);
+  background: var(--paper);
+  margin: 0;
+}
+
+.ef-serif {
+  font-family: "Spectral", Georgia, serif;
+}
+.ef-tabular {
+  font-variant-numeric: tabular-nums;
+}
+.ef-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.ef-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.ef-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--green-300);
+  border-radius: 4px;
+}
+.ef-row:hover {
+  background: var(--gray-soft);
+  cursor: pointer;
+}
+.ef-input {
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.ef-input:focus {
+  outline: 2px solid var(--green-500);
+  outline-offset: -1px;
+}
+.ef-btn-primary {
+  background: var(--green-800);
+  color: white;
+}
+.ef-btn-primary:hover {
+  background: var(--green-900);
+}
+.ef-btn-primary:disabled {
+  background: var(--slate-300);
+  cursor: not-allowed;
+}
+.ef-btn-ghost:hover {
+  background: var(--gray-soft);
+}
+.ef-nav-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.ef-nav-active {
+  background: rgba(255, 255, 255, 0.1);
+}
+@keyframes ef-slide-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.ef-drawer {
+  animation: ef-slide-in 0.18s ease-out;
+}
