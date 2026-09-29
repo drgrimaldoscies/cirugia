@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { Navigate } from "react-router-dom";
-import { supabase } from "../lib/supabaseClient";
+import { supabase, supabaseConfigurado } from "../lib/supabaseClient";
 import { useAuth } from "../context/AuthContext";
 import { LogoFull } from "../components/Logo";
 
@@ -18,7 +18,7 @@ export function Login() {
     setError(null);
     setCargando(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setError("Correo o contraseña incorrectos.");
+    if (error) setError(error.message.toLowerCase().includes("fetch") ? "No se pudo conectar con Supabase. Revisa la configuración." : "Correo o contraseña incorrectos.");
     setCargando(false);
   }
 
@@ -45,6 +45,11 @@ export function Login() {
             placeholder="Contraseña"
             className="ef-input rounded-sm px-3 py-2 text-sm"
           />
+          {!supabaseConfigurado && (
+            <div className="text-xs text-[color:var(--brick)]">
+              Falta conectar Supabase: define VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY (archivo .env o variables de Netlify) y vuelve a desplegar.
+            </div>
+          )}
           {error && <div className="text-xs text-[color:var(--brick)]">{error}</div>}
           <button type="submit" disabled={cargando} className="ef-btn-primary rounded-sm px-4 py-2 text-sm font-semibold mt-2">
             {cargando ? "Ingresando…" : "Ingresar"}

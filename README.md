@@ -84,6 +84,24 @@ dos variables que la aplicación necesita.
    dirección web pública (algo como `tu-sitio.netlify.app`). Esa es la
    URL donde vas a probar todo.
 
+### Después del primer despliegue: conectar Supabase con la URL de Netlify
+
+En Supabase entra a **Authentication → URL Configuration** y coloca tu
+dirección de Netlify (por ejemplo `https://tu-sitio.netlify.app`) en
+**Site URL**, y agrégala también en **Redirect URLs**. Sin esto, los
+enlaces de correo de Supabase apuntarán a `localhost`.
+
+### Trabajo en local (opcional)
+
+```bash
+cp .env.example .env   # y completa tus dos claves
+npm install
+npm run dev
+```
+
+El archivo `.env` NO se sube a GitHub (está en `.gitignore`); las claves de
+producción viven únicamente en Netlify.
+
 ## Parte 5 — Archivos de imágenes o documentos (Supabase Storage)
 
 Esta primera versión **no necesita Supabase Storage**: no se suben
