@@ -256,7 +256,9 @@ function NuevaOportunidadForm({
           .select("id")
           .single();
         if (errorMedico || !creado) {
-          setError("No se pudo registrar el nuevo médico. Intenta nuevamente.");
+          // eslint-disable-next-line no-console
+          console.error("Error al crear médico:", errorMedico);
+          setError(`No se pudo registrar el nuevo médico. ${errorMedico ? `Detalle: ${errorMedico.message}` : ""}`);
           setGuardando(false);
           return;
         }
@@ -264,8 +266,18 @@ function NuevaOportunidadForm({
       }
     }
 
+    const { data: sesion } = await supabase.auth.getSession();
+    if (!sesion.session) {
+      setError("Tu sesión expiró. Cierra sesión y vuelve a ingresar.");
+      setGuardando(false);
+      return;
+    }
+    const uid = sesion.session.user.id;
+
     const { error } = await supabase.from("oportunidades").insert({
-      paciente_nombre: pacienteNombre,
+      created_by: uid,
+      updated_by: uid,
+      paciente_nombre: pacienteNombre.trim(),
       paciente_edad: pacienteEdad ? Number(pacienteEdad) : null,
       codigo_cliente: codigoCliente || null,
       especialidad,
@@ -279,7 +291,9 @@ function NuevaOportunidadForm({
     });
     setGuardando(false);
     if (error) {
-      setError("No se pudo guardar la oportunidad. Intenta nuevamente.");
+      // eslint-disable-next-line no-console
+      console.error("Error al guardar oportunidad:", error);
+      setError(`No se pudo guardar la oportunidad. Detalle: ${error.message}${error.code ? ` (código ${error.code})` : ""}`);
       return;
     }
     onCreada();

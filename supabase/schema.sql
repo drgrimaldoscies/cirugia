@@ -367,3 +367,10 @@ create policy "seguimientos_delete_admin"
 -- update public.profiles set role = 'admin'
 --   where id = (select id from auth.users where email = 'tu_correo@ejemplo.com');
 -- =====================================================================
+
+-- ---------------------------------------------------------------------
+-- Refrescar la caché de esquema de la API de Supabase (PostgREST).
+-- Evita el error "Could not find the '...' column in the schema cache"
+-- justo después de agregar columnas nuevas.
+-- ---------------------------------------------------------------------
+notify pgrst, 'reload schema';
